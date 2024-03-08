@@ -20,7 +20,6 @@ const Main = () => {
     if (res.ok) {
       const data: ICharacterResponse = await res.json();
       setCharacters(data.results);
-      console.log(data.results);
     } else {
       console.error('Failed to fetch characters:', res.status);
     }
