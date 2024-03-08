@@ -5,7 +5,7 @@ import Main from './pages/Main';
 
 function App() {
   return (
-    <div className='p-[4rem]'>
+    <div className="p-[4rem]">
       <Routes>
         <Route index element={<Main />} />
         <Route path="details/:id" element={<Details />} />

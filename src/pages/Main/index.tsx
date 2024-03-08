@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import Table from '../components/Table';
-import TableNavigation from '../components/TableNavigation';
-import { API_BASE_URL, INITIAL_PAGE_INFO } from '../constants';
-import useDebounce from '../hooks/useDebounce';
+import Table from '../../components/Table';
+import TableNavigation from '../../components/TableNavigation';
+import {
+  API_BASE_URL,
+  CHARACTERS_LIMIT,
+  INITIAL_PAGE_INFO,
+} from '../../constants';
+import useDebounce from '../../hooks/useDebounce';
+import { cellSkeletons } from './skeletons';
 
-import { ICharacter, ICharacterResponse, IPageInfo } from '../types';
+import { ICharacter, ICharacterResponse, IPageInfo } from '../../types';
 
 const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
@@ -98,10 +103,10 @@ const Main = () => {
         trClassName="odd:bg-[#2D2D2D] hover:opacity-70 cursor-pointer transition-all"
         tdClassName="min-w-[150px] px-[1rem] max-w-[150px] overflow-hidden truncate text-start h-[4rem] font-medium"
         rows={normalizeCharacters(characters)}
-        noItemsText="There are no sponsors"
+        noItemsText="There are no characters"
         isLoading={isLoading}
-        skeletons={{}}
-        limit={50}
+        skeletons={cellSkeletons}
+        limit={CHARACTERS_LIMIT}
       />
 
       <TableNavigation
