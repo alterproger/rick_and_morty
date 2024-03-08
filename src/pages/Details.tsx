@@ -41,7 +41,7 @@ const Details = () => {
   };
 
   return (
-    <div>
+    <div className='pt-[2rem]'>
       <Link
         to={`/` + location.state.search}
         className="flex items-center gap-[0.5rem]"

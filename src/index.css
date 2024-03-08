@@ -16,3 +16,13 @@ body {
   background: -webkit-linear-gradient(to right, #e100ff, #7f00ff);
   background: linear-gradient(to right, #e100ff, #7f00ff);
 }
+
+.hideScrollBar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.hideScrollBar::-webkit-scrollbar {
+  display: none;
+}

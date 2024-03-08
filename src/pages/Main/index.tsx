@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import Table from '../../components/Table';
 import TableNavigation from '../../components/TableNavigation';
@@ -12,7 +13,6 @@ import useDebounce from '../../hooks/useDebounce';
 import { cellSkeletons } from './skeletons';
 
 import { ICharacter, ICharacterResponse, IPageInfo } from '../../types';
-import { toast } from 'react-toastify';
 
 const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
@@ -46,7 +46,7 @@ const Main = () => {
       setPageInfo(data.info);
       setCharacters(data.results);
     } else {
-     toast.error('Failed to fetch characters')
+      toast.error('Failed to fetch characters');
     }
 
     setIsLoading(false);
@@ -71,8 +71,8 @@ const Main = () => {
   };
 
   return (
-    <div>
-      <div className="mb-[2rem] flex items-center justify-between">
+    <div className='pb-[2rem]'>
+      <div className="mb-[2rem] pt-[2rem] pb-[1rem] bg-[#1e1e1e] left-0 fixed w-full flex items-center justify-between px-[1rem] md:px-[4rem]">
         <TableNavigation
           pageInfo={pageInfo}
           next={() => fetchCharacters(Number(page) + 1)}
@@ -83,7 +83,7 @@ const Main = () => {
           type="text"
           placeholder="Search"
           value={name}
-          className='min-h-[3rem] outline-none gradient rounded-[1rem] font-semibold px-[1rem] min-w-[10rem] placeholder:text-white placeholder:font-semibold'
+          className="gradient min-h-[3rem] min-w-[10rem] rounded-[1rem] px-[1rem] font-semibold outline-none placeholder:font-semibold placeholder:text-white"
           onChange={event =>
             setSearchParams(prev => ({
               ...prev,
@@ -100,21 +100,15 @@ const Main = () => {
           { key: 'status', title: 'Status' },
           { key: 'specie', title: 'Specie' },
         ]}
-        tableClassName="overflow-hidden w-full mb-[2rem] bg-[#262626] rounded-[1.5rem]"
+        tableClassName="overflow-hidden w-full mt-[6rem] bg-[#262626] rounded-[1.5rem]"
         thClassName="text-start font-bold text-[#DCDCDC] bg-[#262626] py-[1rem] px-[1rem]"
         trClassName="odd:bg-[#2D2D2D] cursor-pointer transition-all"
-        tdClassName="min-w-[150px] px-[1rem] max-w-[150px] overflow-hidden truncate text-start h-[4rem] font-medium"
+        tdClassName="w-[20rem] px-[1rem] overflow-hidden truncate text-start h-[4rem] font-medium"
         rows={normalizeCharacters(characters)}
         noItemsText="There are no characters"
         isLoading={isLoading}
         skeletons={cellSkeletons}
         limit={CHARACTERS_LIMIT}
-      />
-
-      <TableNavigation
-        pageInfo={pageInfo}
-        next={() => fetchCharacters(Number(page) + 1)}
-        prev={() => fetchCharacters(Number(page) - 1)}
       />
     </div>
   );
