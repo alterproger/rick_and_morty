@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import Table from '../components/Table';
+import { API_BASE_URL } from '../constants';
+import useDebounce from '../hooks/useDebounce';
 
 import { ICharacter, ICharacterResponse, IPageInfo } from '../types';
 
@@ -8,20 +11,31 @@ const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageInfo, setPageInfo] = useState<IPageInfo | null>(null);
-  const [page, setPage] = useState(`https://rickandmortyapi.com/api/character`);
+
+  const [serchParams, setSearchParams] = useSearchParams();
+
+  const name = serchParams.get('name') || '';
+  const page = serchParams.get('page') || '';
+
+  const debouncedQuery = useDebounce(name, 500);
 
   useEffect(() => {
-    fetchCharacters();
-  }, [page]);
+    fetchCharacters(Number(page) || 1);
+  }, [debouncedQuery]);
 
-  const fetchCharacters = async () => {
+  const fetchCharacters = async (page: number) => {
     setIsLoading(true);
 
-    const res = await fetch(`${page}?count=10`);
+    const res = await fetch(
+      API_BASE_URL + '/character?page=' + page + '&name=' + debouncedQuery,
+    );
 
     if (res.ok) {
       const data: ICharacterResponse = await res.json();
-
+      setSearchParams(prev => ({
+        name: prev.get('name') || '',
+        page: page.toString(),
+      }));
       setPageInfo(data.info);
       setCharacters(data.results);
     } else {
@@ -46,11 +60,33 @@ const Main = () => {
     <div>
       {pageInfo && (
         <div>
-          <button onClick={() => setPage(pageInfo?.prev)}>Prev</button>
+          <button
+            disabled={!pageInfo.prev}
+            onClick={() => fetchCharacters(Number(page) - 1)}
+          >
+            Prev
+          </button>
 
-          <button onClick={() => setPage(pageInfo?.next)}>Next</button>
+          <button
+            disabled={!pageInfo.next}
+            onClick={() => fetchCharacters(Number(page) + 1)}
+          >
+            Next
+          </button>
         </div>
       )}
+
+      <input
+        type="text"
+        placeholder="Search"
+        value={name}
+        onChange={event =>
+          setSearchParams(prev => ({
+            ...prev,
+            name: event.target.value,
+          }))
+        }
+      />
 
       <Table
         headers={[

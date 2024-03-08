@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface ITableRow {
   cells: Record<string, string | ReactNode>;
-  link: string
+  link: string;
 }
 
 export interface ITableHeader {
@@ -39,6 +39,7 @@ const Table = ({
   skeletons,
 }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className={twMerge('hideScrollBar', 'overflow-x-auto')}>
@@ -78,7 +79,9 @@ const Table = ({
                 : rows?.map(item => (
                     <tr
                       className={twMerge(trClassName)}
-                      onClick={() => navigate(item.link)}
+                      onClick={() =>
+                        navigate(item.link, { state: location })
+                      }
                       key={uuidv4()}
                     >
                       {headers.map(header => (
