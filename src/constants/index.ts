@@ -10,3 +10,5 @@ export const INITIAL_PAGE_INFO: IPageInfo = {
   prev: '',
   pages: 0,
 };
+
+export const CHARACTERISTICS = ['name','species','status','gender','origin','location'] as const;

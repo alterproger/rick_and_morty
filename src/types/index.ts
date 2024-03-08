@@ -8,14 +8,8 @@ export interface ICharacter {
   created: string;
   episode: string[];
   image: string;
-  location: {
-    name: string;
-    url: string;
-  };
-  origin: {
-    name: string;
-    url: string;
-  };
+  location: ICharacteristicObject;
+  origin: ICharacteristicObject;
   url: string;
 }
 
@@ -29,4 +23,9 @@ export interface IPageInfo {
 export interface ICharacterResponse {
   info: IPageInfo;
   results: ICharacter[];
+}
+
+export interface ICharacteristicObject {
+  name: string;
+  url: string;
 }

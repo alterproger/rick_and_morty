@@ -1,21 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import CharacterImage from '../components/CharacterImage';
+import CharacteristicList from '../components/CharacteristicList';
 import { ArrowIcon } from '../components/icons';
 
 import { ICharacter } from '../types';
-import { toast } from 'react-toastify';
-
-const POINTS = [
-  { key: 'name', title: 'Name' },
-  { key: 'species', title: 'Species' },
-  { key: 'status', title: 'Status' },
-  { key: 'gender', title: 'Gender' },
-  { key: 'origin', title: 'Origin' },
-  { key: 'location', title: 'Location' },
-];
 
 const Details = () => {
   const [character, setCharacter] = useState<ICharacter | null>(null);
@@ -24,24 +15,33 @@ const Details = () => {
   const params = useParams();
 
   useEffect(() => {
+    const fetchCharacters = async () => {
+      try {
+        const res = await fetch(
+          `https://rickandmortyapi.com/api/character/${params.id}`,
+        );
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch characters');
+        }
+
+        const data: ICharacter = await res.json();
+
+        if (data) {
+          setCharacter(data);
+        }
+      } catch (error: unknown) {
+        toast.error(
+          error instanceof Error ? error.message : 'Failed to fetch character',
+        );
+      }
+    };
+
     fetchCharacters();
   }, []);
 
-  const fetchCharacters = async () => {
-    const res = await fetch(
-      `https://rickandmortyapi.com/api/character/${params.id}`,
-    );
-
-    if (res.ok) {
-      const data: ICharacter = await res.json();
-      setCharacter(data);
-    } else {
-      toast.error('Oops, an error occurred!')
-    }
-  };
-
   return (
-    <div className='pt-[2rem]'>
+    <div className="pt-[2rem]">
       <Link
         to={`/` + location.state.search}
         className="flex items-center gap-[0.5rem]"
@@ -52,43 +52,10 @@ const Details = () => {
         Back
       </Link>
 
-      <div className="mt-[2rem] flex-col lg:flex-row h-[71vh] flex justify-center items-center gap-[4rem]">
-        {character ? (
-          <img
-            src={character.image}
-            alt={character.name}
-            className="h-[20rem] w-[20rem] rounded-[2rem]"
-          />
-        ) : (
-          <Skeleton width="20rem" height="20rem" className="!rounded-[2rem]" />
-        )}
+      <div className="mt-[2rem] flex h-[71vh] flex-col items-center justify-center gap-[4rem] lg:flex-row">
+        <CharacterImage {...{ character }} />
 
-        {character ? (
-          <ul>
-            {POINTS.map(point => (
-              <li key={point.key}>
-                <span>{point.title}: </span>
-                {['origin', 'location'].includes(point.key) ? (
-                  <span className="text-[1.1rem] font-bold">
-                    {(character as any)[point.key].name}
-                  </span>
-                ) : (
-                  <span className="text-[1.1rem] font-bold">
-                    {(character as any)[point.key]}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {POINTS.map(point => (
-              <li key={point.key}>
-                <Skeleton width="7rem" height="1.1rem" />
-              </li>
-            ))}
-          </ul>
-        )}
+        <CharacteristicList {...{ character }} />
       </div>
     </div>
   );
