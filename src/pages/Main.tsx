@@ -66,23 +66,25 @@ const Main = () => {
 
   return (
     <div>
-      <TableNavigation
-        pageInfo={pageInfo}
-        next={() => fetchCharacters(Number(page) + 1)}
-        prev={() => fetchCharacters(Number(page) - 1)}
-      />
+      <div className="mb-[2rem] flex items-center justify-between">
+        <TableNavigation
+          pageInfo={pageInfo}
+          next={() => fetchCharacters(Number(page) + 1)}
+          prev={() => fetchCharacters(Number(page) - 1)}
+        />
 
-      <input
-        type="text"
-        placeholder="Search"
-        value={name}
-        onChange={event =>
-          setSearchParams(prev => ({
-            ...prev,
-            name: event.target.value,
-          }))
-        }
-      />
+        <input
+          type="text"
+          placeholder="Search"
+          value={name}
+          onChange={event =>
+            setSearchParams(prev => ({
+              ...prev,
+              name: event.target.value,
+            }))
+          }
+        />
+      </div>
 
       <Table
         headers={[
@@ -91,15 +93,21 @@ const Main = () => {
           { key: 'status', title: 'Status' },
           { key: 'specie', title: 'Specie' },
         ]}
-        tableClassName="overflow-hidden w-full bg-[#262626] rounded-[1.5rem]"
+        tableClassName="overflow-hidden w-full mb-[2rem] bg-[#262626] rounded-[1.5rem]"
         thClassName="text-start font-bold text-[#DCDCDC] bg-[#262626] py-[1rem] px-[1rem]"
-        trClassName='odd:bg-[#2D2D2D] hover:opacity-70 cursor-pointer transition-all'
+        trClassName="odd:bg-[#2D2D2D] hover:opacity-70 cursor-pointer transition-all"
         tdClassName="min-w-[150px] px-[1rem] max-w-[150px] overflow-hidden truncate text-start h-[4rem] font-medium"
         rows={normalizeCharacters(characters)}
         noItemsText="There are no sponsors"
         isLoading={isLoading}
         skeletons={{}}
         limit={50}
+      />
+
+      <TableNavigation
+        pageInfo={pageInfo}
+        next={() => fetchCharacters(Number(page) + 1)}
+        prev={() => fetchCharacters(Number(page) - 1)}
       />
     </div>
   );
