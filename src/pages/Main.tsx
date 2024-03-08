@@ -49,8 +49,15 @@ const Main = () => {
   const normalizeCharacters = (characters: ICharacter[]) => {
     return characters.map(character => ({
       cells: {
-        image: character.name,
+        image: (
+          <img
+            src={character.image}
+            alt={character.name}
+            className="h-[3rem] w-[3rem] rounded-full"
+          />
+        ),
         name: character.name,
+        status: character.status,
         specie: character.species,
       },
       link: `details/${character.id}`,
@@ -81,11 +88,13 @@ const Main = () => {
         headers={[
           { key: 'image', title: 'Image' },
           { key: 'name', title: 'Name' },
+          { key: 'status', title: 'Status' },
           { key: 'specie', title: 'Specie' },
         ]}
-        tableClassName="overflow-hidden w-full"
-        thClassName="text-start text-[1.0625rem] font-montserrat font-medium opacity-50 pb-[1.39rem] first:text-center last:text-center"
-        tdClassName="min-w-[150px] max-w-[150px] border-t border-solid border-[#707070] overflow-hidden truncate text-start h-[5.985rem] font-montserrat text-[1.125rem] font-medium"
+        tableClassName="overflow-hidden w-full bg-[#262626] rounded-[1.5rem]"
+        thClassName="text-start font-bold text-[#DCDCDC] bg-[#262626] py-[1rem] px-[1rem]"
+        trClassName='odd:bg-[#2D2D2D] hover:opacity-70 cursor-pointer transition-all'
+        tdClassName="min-w-[150px] px-[1rem] max-w-[150px] overflow-hidden truncate text-start h-[4rem] font-medium"
         rows={normalizeCharacters(characters)}
         noItemsText="There are no sponsors"
         isLoading={isLoading}
