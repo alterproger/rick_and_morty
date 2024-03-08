@@ -82,6 +82,7 @@ const Main = () => {
           type="text"
           placeholder="Search"
           value={name}
+          className='min-h-[3rem] outline-none gradient rounded-[1rem] font-semibold px-[1rem] min-w-[10rem] placeholder:text-white placeholder:font-semibold'
           onChange={event =>
             setSearchParams(prev => ({
               ...prev,
@@ -100,7 +101,7 @@ const Main = () => {
         ]}
         tableClassName="overflow-hidden w-full mb-[2rem] bg-[#262626] rounded-[1.5rem]"
         thClassName="text-start font-bold text-[#DCDCDC] bg-[#262626] py-[1rem] px-[1rem]"
-        trClassName="odd:bg-[#2D2D2D] hover:opacity-70 cursor-pointer transition-all"
+        trClassName="odd:bg-[#2D2D2D] cursor-pointer transition-all"
         tdClassName="min-w-[150px] px-[1rem] max-w-[150px] overflow-hidden truncate text-start h-[4rem] font-medium"
         rows={normalizeCharacters(characters)}
         noItemsText="There are no characters"

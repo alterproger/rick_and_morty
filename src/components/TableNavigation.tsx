@@ -14,7 +14,7 @@ const TableNavigation = ({ pageInfo, next, prev }: Props) => {
       <button
         disabled={!pageInfo.prev}
         onClick={prev}
-        className="gradient rotate-[180deg] rounded-[1rem] bg-red-500 p-[0.5rem] transition-all disabled:opacity-50 [&>svg]:w-[2rem]"
+        className="gradient rotate-[180deg] rounded-[1rem] p-[0.5rem] transition-all disabled:opacity-50 [&>svg]:w-[2rem]"
       >
         <ChevronIcon />
       </button>
@@ -22,7 +22,7 @@ const TableNavigation = ({ pageInfo, next, prev }: Props) => {
       <button
         disabled={!pageInfo.next}
         onClick={next}
-        className="gradient rounded-[1rem] bg-red-500 p-[0.5rem] transition-all disabled:opacity-50 [&>svg]:w-[2rem]"
+        className="gradient rounded-[1rem] p-[0.5rem] transition-all disabled:opacity-50 [&>svg]:w-[2rem]"
       >
         <ChevronIcon />
       </button>
