@@ -15,7 +15,7 @@ import { ICharacter, ICharacterResponse, IPageInfo } from '../../types';
 
 const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [pageInfo, setPageInfo] = useState<IPageInfo>(INITIAL_PAGE_INFO);
 
   const [serchParams, setSearchParams] = useSearchParams();

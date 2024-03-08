@@ -54,7 +54,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {rows?.length === 0 ? (
+          {rows?.length === 0 && !isLoading ? (
             <tr className={twMerge(trClassName)}>
               <td
                 className={tdClassName}
