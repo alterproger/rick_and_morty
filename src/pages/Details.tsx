@@ -52,7 +52,7 @@ const Details = () => {
         Back
       </Link>
 
-      <div className="mt-[2rem] flex items-center gap-[4rem]">
+      <div className="mt-[2rem] flex-col lg:flex-row h-[71vh] flex justify-center items-center gap-[4rem]">
         {character ? (
           <img
             src={character.image}

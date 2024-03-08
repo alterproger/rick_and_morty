@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply text-[12px] md:text-[14px] lg:text-[16px];
+}
+
 body {
   background-color: #1e1e1e;
   color: #fff;
@@ -9,14 +13,6 @@ body {
 
 .gradient {
   background: #7f00ff;
-  background: -webkit-linear-gradient(
-    to right,
-    #e100ff,
-    #7f00ff
-  ); 
-  background: linear-gradient(
-    to right,
-    #e100ff,
-    #7f00ff
-  ); 
+  background: -webkit-linear-gradient(to right, #e100ff, #7f00ff);
+  background: linear-gradient(to right, #e100ff, #7f00ff);
 }

@@ -12,6 +12,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { cellSkeletons } from './skeletons';
 
 import { ICharacter, ICharacterResponse, IPageInfo } from '../../types';
+import { toast } from 'react-toastify';
 
 const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
@@ -45,7 +46,7 @@ const Main = () => {
       setPageInfo(data.info);
       setCharacters(data.results);
     } else {
-      console.error('Failed to fetch characters:', res.status);
+     toast.error('Failed to fetch characters')
     }
 
     setIsLoading(false);
