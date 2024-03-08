@@ -1,9 +1,11 @@
-import { ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
-import { v4 as uuidv4 } from "uuid";
+import { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface ITableRow {
   cells: Record<string, string | ReactNode>;
+  link: string
 }
 
 export interface ITableHeader {
@@ -36,12 +38,14 @@ const Table = ({
   limit,
   skeletons,
 }: Props) => {
+  const navigate = useNavigate();
+
   return (
-    <div className={twMerge("hideScrollBar", "overflow-x-auto")}>
+    <div className={twMerge('hideScrollBar', 'overflow-x-auto')}>
       <table className={twMerge(tableClassName)}>
         <thead>
           <tr className={twMerge(trClassName)}>
-            {headers.map((header) => (
+            {headers.map(header => (
               <th key={header.key} className={twMerge(thClassName)}>
                 {header.title}
               </th>
@@ -54,7 +58,7 @@ const Table = ({
               <td
                 className={tdClassName}
                 colSpan={headers.length}
-                style={{ textAlign: "center" }}
+                style={{ textAlign: 'center' }}
               >
                 {noItemsText}
               </td>
@@ -64,16 +68,20 @@ const Table = ({
               {isLoading
                 ? Array.from(Array(limit).keys()).map(() => (
                     <tr className={twMerge(trClassName)} key={uuidv4()}>
-                      {headers.map((header) => (
+                      {headers.map(header => (
                         <td key={uuidv4()} className={twMerge(tdClassName)}>
                           {skeletons[header.key]}
                         </td>
                       ))}
                     </tr>
                   ))
-                : rows?.map((item) => (
-                    <tr className={twMerge(trClassName)} key={uuidv4()}>
-                      {headers.map((header) => (
+                : rows?.map(item => (
+                    <tr
+                      className={twMerge(trClassName)}
+                      onClick={() => navigate(item.link)}
+                      key={uuidv4()}
+                    >
+                      {headers.map(header => (
                         <td key={uuidv4()} className={twMerge(tdClassName)}>
                           {item.cells[header.key]}
                         </td>

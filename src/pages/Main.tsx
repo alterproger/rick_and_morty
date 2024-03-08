@@ -35,6 +35,7 @@ const Main = () => {
         name: character.name,
         specie: character.species,
       },
+      link: `details/${character.id}`,
     }));
   };
 
