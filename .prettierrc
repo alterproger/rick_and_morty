@@ -1,0 +1,25 @@
+{
+      "printWidth": 80,
+      "tabWidth": 2,
+      "useTabs": false,
+      "semi": true,
+      "singleQuote": true,
+      "trailingComma": "all",
+      "bracketSpacing": true,
+      "jsxBracketSameLine": false,
+      "arrowParens": "avoid",
+      "proseWrap": "always",
+      "importOrder": [
+        "^(?!\\.|/|src)(?!.*(\\.css|/css|\\.scss|/scss)).*",
+        "^(?!.*\\/(types|types\\.)|.*(\\.css|/css|\\.scss|/scss)$|.*\\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$|.*\\.(svg|png|webp|jpg|gif|jpeg)$).*",
+        "\\/types$",
+        "(\\.css|/css|\\.scss|/scss)$",
+        "\\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$",
+        "\\.(svg|png|webp|jpg|gif|jpeg)$"
+      ],
+      "importOrderSeparation": true,
+      "plugins": [
+        "@trivago/prettier-plugin-sort-imports",
+        "prettier-plugin-tailwindcss"
+      ]
+    }
