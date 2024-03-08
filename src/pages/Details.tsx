@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { ArrowIcon } from '../components/icons';
@@ -24,7 +25,6 @@ const Details = () => {
 
   useEffect(() => {
     fetchCharacters();
-    console.log(location);
   }, []);
 
   const fetchCharacters = async () => {
@@ -45,21 +45,28 @@ const Details = () => {
   };
   return (
     <div>
-      <Link to={`/` + location.state.search} className='flex gap-[0.5rem] items-center'>
+      <Link
+        to={`/` + location.state.search}
+        className="flex items-center gap-[0.5rem]"
+      >
         <div className="w-[2rem]">
           <ArrowIcon />
         </div>
         Back
       </Link>
 
-      {character && !isLoading && (
-        <div className="mt-[2rem] flex items-center gap-[5rem]">
+      <div className="mt-[2rem] flex items-center gap-[4rem]">
+        {character ? (
           <img
             src={character.image}
             alt={character.name}
-            className="rounded-[2rem]"
+            className="h-[20rem] w-[20rem] rounded-[2rem]"
           />
+        ) : (
+          <Skeleton width="20rem" height="20rem" className="!rounded-[2rem]" />
+        )}
 
+        {character ? (
           <ul>
             {POINTS.map(point => (
               <li key={point.key}>
@@ -76,8 +83,16 @@ const Details = () => {
               </li>
             ))}
           </ul>
-        </div>
-      )}
+        ) : (
+          <ul>
+            {POINTS.map(point => (
+              <li key={point.key}>
+                <Skeleton width="7rem" height="1.1rem" />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
