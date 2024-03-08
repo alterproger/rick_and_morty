@@ -4,6 +4,7 @@ import Details from './pages/Details';
 import Main from './pages/Main';
 
 function App() {
+
   return (
     <Routes>
       <Route index element={<Main />} />
