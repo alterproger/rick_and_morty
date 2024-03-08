@@ -6,6 +6,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowIcon } from '../components/icons';
 
 import { ICharacter } from '../types';
+import { toast } from 'react-toastify';
 
 const POINTS = [
   { key: 'name', title: 'Name' },
@@ -18,7 +19,6 @@ const POINTS = [
 
 const Details = () => {
   const [character, setCharacter] = useState<ICharacter | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
 
   const params = useParams();
@@ -28,8 +28,6 @@ const Details = () => {
   }, []);
 
   const fetchCharacters = async () => {
-    setIsLoading(true);
-
     const res = await fetch(
       `https://rickandmortyapi.com/api/character/${params.id}`,
     );
@@ -38,11 +36,10 @@ const Details = () => {
       const data: ICharacter = await res.json();
       setCharacter(data);
     } else {
-      console.error('Failed to fetch characters:', res.status);
+      toast.error('Oops, an error occurred!')
     }
-
-    setIsLoading(false);
   };
+
   return (
     <div>
       <Link
