@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import Table from '../components/Table';
-import { API_BASE_URL } from '../constants';
+import TableNavigation from '../components/TableNavigation';
+import { API_BASE_URL, INITIAL_PAGE_INFO } from '../constants';
 import useDebounce from '../hooks/useDebounce';
 
 import { ICharacter, ICharacterResponse, IPageInfo } from '../types';
@@ -10,7 +11,7 @@ import { ICharacter, ICharacterResponse, IPageInfo } from '../types';
 const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [pageInfo, setPageInfo] = useState<IPageInfo | null>(null);
+  const [pageInfo, setPageInfo] = useState<IPageInfo>(INITIAL_PAGE_INFO);
 
   const [serchParams, setSearchParams] = useSearchParams();
 
@@ -58,23 +59,11 @@ const Main = () => {
 
   return (
     <div>
-      {pageInfo && (
-        <div>
-          <button
-            disabled={!pageInfo.prev}
-            onClick={() => fetchCharacters(Number(page) - 1)}
-          >
-            Prev
-          </button>
-
-          <button
-            disabled={!pageInfo.next}
-            onClick={() => fetchCharacters(Number(page) + 1)}
-          >
-            Next
-          </button>
-        </div>
-      )}
+      <TableNavigation
+        pageInfo={pageInfo}
+        next={() => fetchCharacters(Number(page) + 1)}
+        prev={() => fetchCharacters(Number(page) - 1)}
+      />
 
       <input
         type="text"
