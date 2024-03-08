@@ -2,23 +2,27 @@ import { useEffect, useState } from 'react';
 
 import Table from '../components/Table';
 
-import { ICharacter, ICharacterResponse } from '../types';
+import { ICharacter, ICharacterResponse, IPageInfo } from '../types';
 
 const Main = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pageInfo, setPageInfo] = useState<IPageInfo | null>(null);
+  const [page, setPage] = useState(`https://rickandmortyapi.com/api/character`);
 
   useEffect(() => {
     fetchCharacters();
-  }, []);
+  }, [page]);
 
   const fetchCharacters = async () => {
     setIsLoading(true);
 
-    const res = await fetch('https://rickandmortyapi.com/api/character');
+    const res = await fetch(`${page}?count=10`);
 
     if (res.ok) {
       const data: ICharacterResponse = await res.json();
+
+      setPageInfo(data.info);
       setCharacters(data.results);
     } else {
       console.error('Failed to fetch characters:', res.status);
@@ -40,6 +44,14 @@ const Main = () => {
 
   return (
     <div>
+      {pageInfo && (
+        <div>
+          <button onClick={() => setPage(pageInfo?.prev)}>Prev</button>
+
+          <button onClick={() => setPage(pageInfo?.next)}>Next</button>
+        </div>
+      )}
+
       <Table
         headers={[
           { key: 'image', title: 'Image' },

@@ -19,12 +19,14 @@ export interface ICharacter {
   url: string;
 }
 
+export interface IPageInfo {
+  count: number;
+  pages: number;
+  next: string;
+  prev: string;
+}
+
 export interface ICharacterResponse {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: string;
-  };
+  info: IPageInfo;
   results: ICharacter[];
 }
